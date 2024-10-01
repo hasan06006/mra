@@ -60,7 +60,7 @@
                       </tr>
                       <tr>
                         <th>Document </th>
-                        <td><a href="{{ asset('/uploads/documents/'.$renterinfos->document) }}">{{ $renterinfos->document }}</a>  </td>                              
+                        <td><a href="{{ asset('public/uploads/documents/'.$renterinfos->document) }}">{{ $renterinfos->document }}</a>  </td>                              
                       </tr>
                     
                     </tbody>
