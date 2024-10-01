@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+
+    <link rel="stylesheet" href="{{asset('resources/dist/css/invoice.css')}}">
+</head>
+<body>
+    
+<div class="container">
+        <div class="content" >
+       
+                                <table width="100%"  cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                    <tr>                                        
+                                        <td class="" style="text-align:center;" >
+                                            <h3>{{ optional($mraforms->expensetype)->name }}</h3>
+                                        </td>
+                                    </tr>
+                                    <tr class="total">
+                                            <td><hr style="border-top: 1px solid #000000"></td>
+                                    </tr>
+                                    <tr class="total">
+                                        <td><b>Address:</b> Plot # 1088, Block # I,Road # Sabrina Sobhan 5th Avenue,Bashundhara R/A, Vatara,Dhaka-1229, Bangladesh.</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="">
+                                            <table class="invoice">
+                                                <tbody>
+                                                <tr>
+                                                     <td><b>INVOICE NUMBER </b></td><td>:</td> <td>{{ $mraforms->invoice }}</td>												
+                                                </tr>  
+                                            <!--    <tr> Carbon::now('Asia/Dhaka')
+                                                     <td><b>INVOICE DATE </b></td><td>:</td> <td>{{ \Carbon\Carbon::parse($mraforms->created_at)->format('d-m-Y') }}</td>												
+                                                </tr>  -->
+                                                <tr>
+                                                     <td><b>INVOICE DATE </b></td><td>:</td> <td>{{ \Carbon\Carbon::parse($mraforms->created_at)->setTimezone('Asia/Dhaka')->format('d-m-Y H:i:s') }}</td>												
+                                                </tr> 
+												<tr>
+                                                     <td width="30%"><b>PAYMENT TYPE </b></td><td width="5%">:</td> <td>{{ optional($mraforms->paymenttype)->name }}</td>												
+                                                </tr>
+                                                <tr>
+                                                     <td><b>CONCERN </b></td><td>:</td> <td>{{ optional($mraforms->concernperson)->name }}</td>												
+                                                </tr>
+                                                <tr>
+                                                     <td><b>PURPOSE </b></td><td>:</td> <td>{{ $mraforms->purpose }}</td>												
+                                                </tr>
+                                                <tr>
+                                                     <td><b>AMOUNT </b></td><td>:</td> <td>{{ number_format($mraforms->amount) }} /=</td>												
+                                                </tr>                                                
+                                                <tr>
+                                                     <td><b>GRAND TOTAL </b></td><td>:</td> <td>{{ number_format($mraforms->grand_total) }} /=</td>												
+                                                </tr>
+                                                <tr>
+                                                     <td><b>IN WORDS </b></td><td>:</td> <td>{{ $mraforms->word }} Taka</td>												
+                                                </tr>
+                                                <tr>
+                                                     <td><b>RECEIVED BY </b></td><td>:</td> <td>{{ optional($mraforms->receivedby)->name }} ({{ optional($mraforms->receivedby)->office_id }})</td>												
+                                                </tr>
+                                                <tr>
+                                                     <td><b>REMARKS </b></td><td>:</td> <td>{{ $mraforms->remarks }}</td>												
+                                                </tr>                                               
+                                           
+                                            </tbody>
+											
+											</table>
+                                                                                       
+                                        </td>
+                                    </tr>
+                                    
+
+                                    <tr>
+                                        <td >
+                                            <table class="invoice">
+                                                <tbody>												
+                                                <tr>                                                   
+													<td align="left">Prepared By<br><hr style="width:60%;border-top: 1px dotted #000000"></td>
+                                                    <td align="left">Verified By<br><hr style="width:60%;border-top: 1px dotted #000000"></td> 
+                                                    <td align="left">Approved By<br><hr style="width:60%;border-top: 1px dotted #000000"></td>
+                                                </tr>  
+                                                <tr>                                                   
+													<td align="left">{{ optional($mraforms->preparedby)->name }} ({{ optional($mraforms->preparedby)->office_id }})</td>
+                                                    <td align="left">{{ optional($mraforms->varifiedby)->name }} ({{ optional($mraforms->varifiedby)->office_id }})</td>
+                                                    <td align="left">{{ optional($mraforms->approvedby)->name }} ({{ optional($mraforms->approvedby)->office_id }})</td>
+                                                </tr>                                           
+                                           
+                                            </tbody>											
+											</table>                                                                                       
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody></table>
+                              
+                               
+                               
+        </div>         
+</div>   
+   
+</body>
+</html>
