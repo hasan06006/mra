@@ -28,19 +28,20 @@
                             </div>
                         </div>
 
-
                         <div class="row mb-3">
                             <label for="expense_type" class="col-md-4 col-form-label text-md-end">{{ __('Miscellaneous Expense') }}</label>
 
                             <div class="col-md-6">                           
-                                <select class="form-control @error('expense_type') is-invalid @enderror" name="expense_type" id="expense_type" required >
-                                <option value="">Select One</option>
-                                @foreach ($expenselists as $expenselists)                                   
-
-                                    <option value="{{ $expenselists->id }}" @if($expenselists->id== $mraforms->expense_type) selected='selected' @endif >{{ $expenselists->name }}</option> 
-                                    
-                                @endforeach   
-                                                                      
+                                <select class="form-control @error('expense_type') is-invalid @enderror" name="expense_type" id="expense_type" required>
+                                    <option value="">Select One</option>
+                                    @foreach ($expenselists as $expenselist)                                   
+                                        <option value="{{ $expenselist->id }}" 
+                                            @if($expenselist->id == $mraforms->expense_type) 
+                                                selected='selected' 
+                                            @endif >
+                                            {{ $expenselist->name }}
+                                        </option> 
+                                    @endforeach   
                                 </select>                            
 
                                 @error('expense_type')
@@ -50,6 +51,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <label for="payment_type" class="col-md-4 col-form-label text-md-end">{{ __('Payment Type') }}</label>
 
@@ -73,12 +75,16 @@
                             <label for="concern_person" class="col-md-4 col-form-label text-md-end">{{ __('Concern Person') }}</label>
 
                             <div class="col-md-6">                           
-                                <select class="form-control @error('concern_person') is-invalid @enderror" name="concern_person" id="concern_person" required >
-                                <option value="">Select One</option>  
-                                @foreach ($concernpersons as $concernpersons)                                      
-                                        <option value="{{ $concernpersons->id }}" @if($concernpersons->id== $mraforms->concern_person) selected='selected' @endif >{{ $concernpersons->name }}</option>
-                                @endforeach  
-                                                                      
+                                <select class="form-control @error('concern_person') is-invalid @enderror" name="concern_person" id="concern_person" required>
+                                    <option value="">Select One</option>  
+                                    @foreach ($concernpersons as $concernperson)  <!-- Change loop variable to $concernperson -->                                  
+                                        <option value="{{ $concernperson->id }}" 
+                                            @if($concernperson->id == $mraforms->concern_person) 
+                                                selected='selected' 
+                                            @endif >
+                                            {{ $concernperson->name }}
+                                        </option>
+                                    @endforeach  
                                 </select>                            
 
                                 @error('concern_person')
@@ -88,7 +94,6 @@
                                 @enderror
                             </div>
                         </div>
-
                       
 
                        
@@ -149,15 +154,19 @@
                         </div>
                        
                         <div class="row mb-3">
-                            <label for="received_by" class="col-md-4 col-form-label text-md-end">{{ __('Recieved By') }}</label>
+                            <label for="received_by" class="col-md-4 col-form-label text-md-end">{{ __('Received By') }}</label>
 
                             <div class="col-md-6">                           
-                                <select class="form-control @error('received_by') is-invalid @enderror" name="received_by" id="received_by"  >
-                                <option value="">Select One</option>  
-                                @foreach ($rbpeoplelists as $rbpeoplelist)                                     
-                                      <option value="{{ $rbpeoplelist->id }}" @if($rbpeoplelist->id== $mraforms->received_by) selected='selected' @endif >{{ $rbpeoplelist->name }}</option>
-                                @endforeach
-                                                                  
+                                <select class="form-control @error('received_by') is-invalid @enderror" name="received_by" id="received_by" required>
+                                    <option value="">Select One</option>  
+                                    @foreach ($rbpeoplelists as $rbpeoplelist)                                     
+                                        <option value="{{ $rbpeoplelist->id }}" 
+                                            @if($rbpeoplelist->id == $mraforms->received_by) 
+                                                selected='selected' 
+                                            @endif >
+                                            {{ $rbpeoplelist->name }}
+                                        </option>
+                                    @endforeach
                                 </select>                            
 
                                 @error('received_by')
@@ -166,7 +175,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>       
+                        </div>
 
                       
 
@@ -228,12 +237,16 @@
                             <label for="approved_by" class="col-md-4 col-form-label text-md-end">{{ __('Approved By') }}</label>
 
                             <div class="col-md-6">                           
-                                <select class="form-control @error('approved_by') is-invalid @enderror" name="approved_by" id="approved_by"  >
-                                <option value="">Select One</option>  
-                                @foreach ($abpeoplelists as $abpeoplelist)                                     
-                                      <option value="{{ $abpeoplelist->id }}" @if($abpeoplelist->id== $mraforms->approved_by) selected='selected' @endif >{{ $abpeoplelist->name }}</option>
-                                @endforeach
-                                                                  
+                                <select class="form-control @error('approved_by') is-invalid @enderror" name="approved_by" id="approved_by" required>
+                                    <option value="">Select One</option>  
+                                    @foreach ($abpeoplelists as $abpeoplelist)                                     
+                                        <option value="{{ $abpeoplelist->id }}" 
+                                            @if($abpeoplelist->id == $mraforms->approved_by) 
+                                                selected='selected' 
+                                            @endif >
+                                            {{ $abpeoplelist->name }}
+                                        </option>
+                                    @endforeach
                                 </select>                            
 
                                 @error('approved_by')
@@ -242,7 +255,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>    
+                        </div>
                         
                         
                         <div class="row mb-3">
@@ -282,6 +295,43 @@
 
 
 <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('js/choices.min.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Choices('#expense_type', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+         // Initialize Choices for concern_person dropdown
+         new Choices('#concern_person', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+       // Initialize Choices for received_by dropdown
+       new Choices('#received_by', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+        // Initialize Choices for approved_by dropdown
+        new Choices('#approved_by', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+       
+    });
+</script>
  <script>
         $(document).ready(function() {
             $('#amount').on('input', function() {  // Using 'input' event instead of 'keyup'

@@ -15,7 +15,7 @@
   <!-- Theme style -->
 
  <link rel="stylesheet" href="{{asset('/../resources/dist/css/adminlte.min.css')}}">
-
+ <link href="{{ asset('/css/choices.min.css') }}" rel="stylesheet">
 
 </head>
 <!--

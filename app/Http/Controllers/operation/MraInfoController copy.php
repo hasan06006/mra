@@ -26,104 +26,75 @@ class MraInfoController extends Controller
     }
 
 
-    public function create()
-    {
-        // Fetch data for dropdowns
-        $expenselists = DB::table('expenselists')->where('is_active', 'ACTIVE')->get();
-        $paymentlists = DB::table('paymentlists')->where('is_active', 'ACTIVE')->get();
-        $concernpersons = DB::table('concernpersons')->where('is_active', 'ACTIVE')->get();
+    function create(){        
+        $expenselists = DB::table('expenselists')->Where('is_active', 'ACTIVE')->get(); // For dropdown flat list from 
+        $paymentlists = DB::table('paymentlists')->Where('is_active', 'ACTIVE')->get(); // For dropdown flat list from 
+        $concernpersons = DB::table('concernpersons')->Where('is_active', 'ACTIVE')->get(); // For dropdown flat list from  
+        //$peoplelists = DB::table('peoplelists')->Where('is_active', 'ACTIVE')->get(); // For dropdown flat list from          
+        $rbpeoplelists = DB::table('peoplelists')->Where('is_active', 'ACTIVE')
+                                                 ->where('is_received_by','YES')
+                                                 ->orderBy('name', 'asc')
+                                                 ->get(); 
+        $pbpeoplelists = DB::table('peoplelists')->Where('is_active', 'ACTIVE')
+                                                 ->where('is_prepared_by','YES')
+                                                 ->orderBy('name', 'asc')
+                                                 ->get(); 
+        $vbpeoplelists = DB::table('peoplelists')->Where('is_active', 'ACTIVE')
+                                                        ->where('is_varified_by','YES')
+                                                        ->orderBy('name', 'asc')
+                                                        ->get();   
+        $abpeoplelists = DB::table('peoplelists')->Where('is_active', 'ACTIVE')
+                                                ->where('is_approved_by','YES')
+                                                ->orderBy('name', 'asc')
+                                                ->get();
 
-        $rbpeoplelists = DB::table('peoplelists')
-            ->where('is_active', 'ACTIVE')
-            ->where('is_received_by', 'YES')
-            ->orderBy('name', 'asc')
-            ->get();
 
-        $pbpeoplelists = DB::table('peoplelists')
-            ->where('is_active', 'ACTIVE')
-            ->where('is_prepared_by', 'YES')
-            ->orderBy('name', 'asc')
-            ->get();
-
-        $vbpeoplelists = DB::table('peoplelists')
-            ->where('is_active', 'ACTIVE')
-            ->where('is_varified_by', 'YES')
-            ->orderBy('name', 'asc')
-            ->get();
-
-        $abpeoplelists = DB::table('peoplelists')
-            ->where('is_active', 'ACTIVE')
-            ->where('is_approved_by', 'YES')
-            ->orderBy('name', 'asc')
-            ->get();
-
-        // Generate a new invoice
-        $lastInvoice = Mraform::orderBy('id', 'desc')->first();
+        $lastInvoice = Mraform::orderBy('id', 'desc')->first();    
         if ($lastInvoice) {
             $invoice = 'INV-' . str_pad($lastInvoice->id + 1, 6, '0', STR_PAD_LEFT);
         } else {
             $invoice = 'INV-0000001';
-        }
+        }      
+      
 
-        // Check if the generated invoice already exists in the database
-        $existingInvoice = Mraform::where('invoice', $invoice)->exists();
-        if ($existingInvoice) {
-            // Handle duplicate invoice
-            return redirect()->back()->withErrors('Duplicate Invoice Detected! Please try again.');
-        }
-
-        // Pass data to the view
-        return view('operation.create', compact(
-            'expenselists',
-            'paymentlists',
-            'concernpersons',
-            'invoice',
-            'rbpeoplelists',
-            'pbpeoplelists',
-            'vbpeoplelists',
-            'abpeoplelists'
-        ));
+        return view('operation.create', compact('expenselists','paymentlists','concernpersons','invoice','rbpeoplelists','pbpeoplelists','vbpeoplelists','abpeoplelists'));
+       
+       
     }
 
+    function store(Request $request){
+        
+        $mraforms = New Mraform;
+        $mraforms->invoice               = $request->input('invoice');
+        $mraforms->expense_type          = $request->input('expense_type');      
+        $mraforms->payment_type          = $request->input('payment_type');
+        $mraforms->concern_person        = $request->input('concern_person');  
+        $mraforms->purpose               = $request->input('purpose');
+        $mraforms->amount                = $request->input('amount');
+        $mraforms->grand_total           = $request->input('grand_total');
+        $mraforms->word                  = $request->input('word');
+        $mraforms->received_by           = $request->input('received_by');
+        $mraforms->remarks               = $request->input('remarks');
+        $mraforms->prepared_by           = $request->input('prepared_by');
+        $mraforms->varified_by           = $request->input('varified_by');
+        $mraforms->approved_by           = $request->input('approved_by');
+        $mraforms->created_by            = auth()->user()->id;      
 
-    public function store(Request $request)
-    {
-        // Check for duplicate invoice
-        $existingInvoice = Mraform::where('invoice', $request->input('invoice'))->exists();
-        if ($existingInvoice) {
-            return redirect()->back()->withErrors('Duplicate Invoice Detected! Please use a unique invoice number.')->withInput();
-        }
 
-        // Create a new Mraform instance
-        $mraforms = new Mraform;
-        $mraforms->invoice = $request->input('invoice');
-        $mraforms->expense_type = $request->input('expense_type');
-        $mraforms->payment_type = $request->input('payment_type');
-        $mraforms->concern_person = $request->input('concern_person');
-        $mraforms->purpose = $request->input('purpose');
-        $mraforms->amount = $request->input('amount');
-        $mraforms->grand_total = $request->input('grand_total');
-        $mraforms->word = $request->input('word');
-        $mraforms->received_by = $request->input('received_by');
-        $mraforms->remarks = $request->input('remarks');
-        $mraforms->prepared_by = $request->input('prepared_by');
-        $mraforms->varified_by = $request->input('varified_by');
-        $mraforms->approved_by = $request->input('approved_by');
-        $mraforms->created_by = auth()->user()->id;
+        if($request->hasfile('document')){
 
-        // Handle file upload
-        if ($request->hasFile('document')) {
             $file = $request->file('document');
-            $extension = $file->getClientOriginalExtension();
-            $filename = $mraforms->invoice . '-APPROVED.' . $extension;
-            $file->move(public_path() . '/uploads/documents/', $filename);
-            $mraforms->document = $filename; // Corrected property name from $renterinfos to $mraforms
+            $extension = $file->getClientOriginalExtension();     
+            $filename = $mraforms->invoice.'-AAPROVED.'.$extension;      
+            $file->move(public_path().'/uploads/documents/',$filename);
+            $renterinfos->document = $filename;
         }
+       
 
-        // Save the record to the database
         $mraforms->save();
-
-        return redirect('mraform')->with('status', 'Successfully Inserted');
+        return redirect('mraform')->with('status','Succesfully Inserted');
+       
+       
     }
 
 

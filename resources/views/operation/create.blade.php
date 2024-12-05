@@ -32,14 +32,13 @@
                         <div class="row mb-3">
                             <label for="expense_type" class="col-md-4 col-form-label text-md-end">{{ __('Miscellaneous Expense') }}</label>
 
-                            <div class="col-md-6">                           
-                                <select class="form-control @error('expense_type') is-invalid @enderror" name="expense_type" id="expense_type" required >
-                                <option value="">Select One</option>
-                                @foreach ($expenselists as $expenselists)
-                                      <option value="{{ $expenselists->id }}">{{ $expenselists->name }}</option>
-                                @endforeach   
-                                                                      
-                                </select>                            
+                            <div class="col-md-6">
+                                <select class="form-control @error('expense_type') is-invalid @enderror" name="expense_type" id="expense_type" required>
+                                    <option value="">Select One</option>
+                                    @foreach ($expenselists as $expenselist)
+                                        <option value="{{ $expenselist->id }}">{{ $expenselist->name }}</option>
+                                    @endforeach
+                                </select>
 
                                 @error('expense_type')
                                     <span class="invalid-feedback" role="alert">
@@ -48,6 +47,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <label for="payment_type" class="col-md-4 col-form-label text-md-end">{{ __('Payment Type') }}</label>
 
@@ -147,16 +147,15 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="received_by" class="col-md-4 col-form-label text-md-end">{{ __('Recieved By') }}</label>
+                            <label for="received_by" class="col-md-4 col-form-label text-md-end">{{ __('Received By') }}</label>
 
-                            <div class="col-md-6">                           
-                                <select class="form-control @error('received_by') is-invalid @enderror" name="received_by" id="received_by"  >
-                                <option value="">Select One</option>  
-                                @foreach ($rbpeoplelists as $rbpeoplelist)
-                                      <option value="{{ $rbpeoplelist->id }}">{{ $rbpeoplelist->name }}</option>
-                                @endforeach
-                                                                  
-                                </select>                            
+                            <div class="col-md-6">
+                                <select class="form-control @error('received_by') is-invalid @enderror" name="received_by" id="received_by" required>
+                                    <option value="">Select One</option>  
+                                    @foreach ($rbpeoplelists as $rbpeoplelist)
+                                        <option value="{{ $rbpeoplelist->id }}">{{ $rbpeoplelist->name }}</option>
+                                    @endforeach
+                                </select>
 
                                 @error('received_by')
                                     <span class="invalid-feedback" role="alert">
@@ -164,7 +163,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>           
+                        </div>
                      
                                  
 
@@ -225,14 +224,13 @@
                         <div class="row mb-3">
                             <label for="approved_by" class="col-md-4 col-form-label text-md-end">{{ __('Approved By') }}</label>
 
-                            <div class="col-md-6">                           
-                                <select class="form-control @error('approved_by') is-invalid @enderror" name="approved_by" id="approved_by"  >
-                                <option value="">Select One</option>  
-                                @foreach ($abpeoplelists as $abpeoplelist)
-                                      <option value="{{ $abpeoplelist->id }}">{{ $abpeoplelist->name }}</option>
-                                @endforeach
-                                                                  
-                                </select>                            
+                            <div class="col-md-6">
+                                <select class="form-control @error('approved_by') is-invalid @enderror" name="approved_by" id="approved_by" required>
+                                    <option value="">Select One</option>  
+                                    @foreach ($abpeoplelists as $abpeoplelist)
+                                        <option value="{{ $abpeoplelist->id }}">{{ $abpeoplelist->name }}</option>
+                                    @endforeach
+                                </select>
 
                                 @error('approved_by')
                                     <span class="invalid-feedback" role="alert">
@@ -241,7 +239,6 @@
                                 @enderror
                             </div>
                         </div>
-                        
                         
                         <div class="row mb-3">
                             <label for="" class="col-md-4 col-form-label text-md-end">{{ __('Document') }}</label>
@@ -283,6 +280,44 @@
 <!--<script src="{{asset('resources/plugins/jquery/jquery.min.js')}}"></script>-->
 <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('js/choices.min.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Choices('#expense_type', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+         // Initialize Choices for concern_person dropdown
+         new Choices('#concern_person', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+       // Initialize Choices for received_by dropdown
+       new Choices('#received_by', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+        // Initialize Choices for approved_by dropdown
+        new Choices('#approved_by', {
+            searchEnabled: true,
+            removeItemButton: true,
+            itemSelectText: '', 
+            placeholderValue: '',
+        });
+
+       
+    });
+</script>
+
  <script>
         $(document).ready(function() {
             $('#amount').on('input', function() {  // Using 'input' event instead of 'keyup'
