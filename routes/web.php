@@ -10,6 +10,8 @@ use App\Http\Controllers\setup\ExpenselistController;
 use App\Http\Controllers\setup\PaymentlistController;
 use App\Http\Controllers\setup\ConcernpersonController;
 use App\Http\Controllers\setup\PeoplelistController;
+use App\Http\Controllers\finance\TransactionController;
+use App\Http\Controllers\finance\LedgerReportController;
 
 
 /*
@@ -47,6 +49,12 @@ Route::middleware(['auth'])->group(function () {
       Route::get('/invoicepage/{id}', [MraInfoController::class, 'invoicepage']);
 
       
+      //Finance folder related all routes
+      Route::get('/transactions/index', [TransactionController::class, 'index'])->name('transactions-index');
+      Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions-create');
+      Route::post('/transactions/store', [TransactionController::class, 'store'])->name('transactions-store');
+      Route::get('/transactions/edit/{id}', [TransactionController::class, 'edit'])->name('transactions-edit');
+      Route::put('/transactions/update/{id}', [TransactionController::class, 'update'])->name('transactions-update');
 
 
 
@@ -88,6 +96,10 @@ Route::middleware(['auth'])->group(function () {
     
       Route::get('/areport', [ReportController::class, 'indexadvance']); 
       Route::get('/areportdata', [ReportController::class, 'showadvance']);   
+      Route::get('/lreport', [LedgerReportController::class, 'indexLedger']); 
+      Route::get('/lreportdata', [LedgerReportController::class, 'detailsLedger'])->name('ledger-report-action');   
+      Route::get('/blreport', [LedgerReportController::class, 'indexBalanceSummery'])->name('balance-summery-parameter');; 
+      Route::get('/blreportdata', [LedgerReportController::class, 'balanceSummery'])->name('balance-summery-action');   
       
     
     

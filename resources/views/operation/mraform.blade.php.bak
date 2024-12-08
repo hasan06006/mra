@@ -80,7 +80,7 @@
                     <td>{{ optional($mraform->preparedby)->name }}</td>                       
                     <td>{{ optional($mraform->varifiedby)->name }}</td>                         
                     <td>{{ optional($mraform->approvedby)->name }}</td> 
-                    <td><a href="{{ asset('uploads/documents/'.$mraform->document) }}">{{ $mraform->document }}</a></td>                     
+                    <td><a href="{{ asset('public/uploads/documents/'.$mraform->document) }}">{{ $mraform->document }}</a></td>                     
                     <td>{{ optional($mraform->createsby)->name }}</td> 
                     <td>{{ \Carbon\Carbon::parse($mraform->created_at)->setTimezone('Asia/Dhaka')->format('d-m-Y H:i:s') }}</td>               
                     <td>

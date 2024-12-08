@@ -74,6 +74,36 @@
               </li>-->
             </ul>
           </li>    
+          
+          <li class="nav-item ">
+            <a href="#" class="nav-link active">
+            <i class="fas fa-money-bill-wave nav-icon"></i>            
+              <p>
+                Finance Management
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('transactions-index')}}" class="nav-link">
+                <i class="fas fa-credit-card nav-icon"></i>
+                  <p>Ledger List</p>
+                </a>
+              </li>              
+              <li class="nav-item">
+                <a href="{{route('transactions-create')}}" class="nav-link">
+                <i class="fas fa-exchange-alt nav-icon"></i>
+                  <p>Ledger Entry</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('balance-summery-parameter')}}" class="nav-link">
+                <i class="fas fa-wallet nav-icon"></i>
+                  <p>Balance Summary</p>
+                </a>
+              </li>             
+            </ul>
+          </li>    
 
           <li class="nav-item ">
             <a href="#" class="nav-link active">
@@ -84,13 +114,19 @@
               </p>
             </a>            
             <ul class="nav nav-treeview">
-            <li class="nav-item">
+              <li class="nav-item">
                 <a href="{{url('/areport')}}" class="nav-link ">
                   <i class="nav-icon far fa-file-pdf text-warning"></i>
                   <p>General Report</p>
                 </a>
               </li>
-            </ul>
+              <li class="nav-item">
+                <a href="{{url('/lreport')}}" class="nav-link ">
+                  <i class="nav-icon far fa-file-pdf text-warning"></i>
+                  <p>Ledger Report</p>
+                </a>
+              </li>
+            </ul>           
             
           </li>   
           
